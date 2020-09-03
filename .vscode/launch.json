@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Aula01SpringBootApplication<aula01-spring-boot>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.example.aula01springboot.Aula01SpringBootApplication",
+            "projectName": "aula01-spring-boot",
+            "args": ""
+        }
+    ]
+}
