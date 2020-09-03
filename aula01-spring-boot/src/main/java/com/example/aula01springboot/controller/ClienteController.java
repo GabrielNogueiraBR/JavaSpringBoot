@@ -31,77 +31,81 @@ public class ClienteController {
     @PostConstruct
     public void criarClientes(){
         //Metodo para criar Clientes
-        Cliente c1 = new Cliente();
-        Cliente c2 = new Cliente();
-        Cliente c3 = new Cliente();
+        final Cliente c1 = new Cliente();
+        final Cliente c2 = new Cliente();
+        final Cliente c3 = new Cliente();
 
-       c1.codigo = 1;
-       c1.nome = "Jose";
-       c1.endereco = "Rua X, 97";
-       c1.saldo = 100;
+        c1.codigo = 1;
+        c1.nome = "Jose";
+        c1.endereco = "Rua X, 97";
+        c1.saldo = 100;
 
-       c2.codigo = 2;
-       c2.nome = "Maria";
-       c2.endereco = "Rua Y, 98";
-       c2.saldo = 300;
+        c2.codigo = 2;
+        c2.nome = "Maria";
+        c2.endereco = "Rua Y, 98";
+        c2.saldo = 300;
 
-       c3.codigo = 3;
-       c3.nome = "Pedro";
-       c3.endereco = "Rua Z, 99";
-       c3.saldo = 400;
+        c3.codigo = 3;
+        c3.nome = "Pedro";
+        c3.endereco = "Rua Z, 99";
+        c3.saldo = 400;
 
-       //Adicionando vários itens de uma vez na Lista
-       listaCliente = Arrays.asList(c1,c2,c3); 
-       // com o asList, podemos inserir quantos objetos quisermos daquele tipo
-            //asList(T...a) sendo o T o tipo da Classe que corresponde a Lista criada
+        // Adicionando vários itens de uma vez na Lista
+        listaCliente = Arrays.asList(c1, c2, c3);
+        // com o asList, podemos inserir quantos objetos quisermos daquele tipo
+        // asList(T...a) sendo o T o tipo da Classe que corresponde a Lista criada
 
-        //Adicionando item a item na Lista
-            //listaCliente.add(new Cliente());
-
-        
+        // Adicionando item a item na Lista
+        // listaCliente.add(new Cliente());
 
     }
 
-
-
-    // o GetMapping mapeia uma requisição HTTP ao servidor e retorna ao cliente (navegador)
+    // o GetMapping mapeia uma requisição HTTP ao servidor e retorna ao cliente
+    // (navegador)
 
     // GetMapping --> Métodos de Requisição HTTP
     // PostMapping --> Métodos de Requisição HTTP
     // DeleteMapping --> Métodos de Requisição HTTP
 
     @GetMapping("/clientes")
-    public List<Cliente> getClientes(){
+    public List<Cliente> getClientes() {
         return listaCliente;
     }
 
-    
     // GetMapping usando um mapeamento com uma variavel na requisicao
 
-        // temos um tratamento para receber os codigos de cada cliente atraves de {codigo}
+    // temos um tratamento para receber os codigos de cada cliente atraves de
+    // {codigo}
 
-        // para receber o codigo dentro da nossa requisicao, devemos adicionar uma nova anotacao --> @PathVariable
+    // para receber o codigo dentro da nossa requisicao, devemos adicionar uma nova
+    // anotacao --> @PathVariable
 
-        //@PathVariable --> 
+    // @PathVariable -->
 
     @GetMapping("/cliente/{codigo}")
-    public Cliente getCliente(@PathVariable final int codigo){
-        int position = getPosition(codigo);
-        
-        if(codigo>0 && position > -1){
-            return listaCliente.get(position);
-        }
-        
-        return null;
-            
+    public Cliente getCliente(@PathVariable final int codigo) {
+        Cliente cli;
+
+        // Primeiro modo sem as orientações do professor
+        final int position = getPosition(codigo);
+        if (codigo > 0 && position > -1) {
+            cli = listaCliente.get(position);
+        } else
+            cli = null;
+
+        // Segundo Modo de retornar com as orientações do professor
+        cli = getClienteCodigo(codigo);
+
+        return cli;
+
     }
 
-    public int getPosition(int codigo){
+    public int getPosition(final int codigo) {
         int i;
 
-        for(i = 0; i < listaCliente.size();i++){
+        for (i = 0; i < listaCliente.size(); i++) {
 
-            if(this.listaCliente.get(i).codigo == codigo){
+            if (this.listaCliente.get(i).codigo == codigo) {
                 return i;
             }
         }
@@ -109,5 +113,15 @@ public class ClienteController {
         return -1;
     }
 
-    
+    // Metodo criado a partir da explicacao do professor
+    public Cliente getClienteCodigo(final int codigo) {
+        for (final Cliente aux : listaCliente) {
+
+            if(aux.codigo == codigo)
+                return aux;
+
+        }
+        return null;
+
+    }
 }
