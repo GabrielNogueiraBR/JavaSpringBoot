@@ -1,5 +1,12 @@
 package com.example.aula01springboot.controller;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,6 +15,54 @@ import org.springframework.web.bind.annotation.RestController;
 public class ClienteController {
         // a classe ClienteController é instânciada pelo próprio SpringBoot
 
+    //Criando uma lista para armazenar nossos objetos a serem passados para o método GetMapping
+        //Essa lista é um ATRIBUTO da classe ClienteController, ele seria variavel caso estivesse dentro de um método.
+
+    List <Cliente> listaCliente;
+        // listaCliente = new ArrayList<Cliente>(); --> cria a Lista
+    
+    //Todos os métodos enxergam o atributo, diferente de uma variavel
+        //Atributo -> Dentro da classe
+        //Variavel -> Dentro de um método
+
+
+    //PostConstruct é uma anotação do Java que chama o método que possui a anotação assim que a classe é construída.
+
+    @PostConstruct
+    public void criarClientes(){
+        //Metodo para criar Clientes
+        Cliente c1 = new Cliente();
+        Cliente c2 = new Cliente();
+        Cliente c3 = new Cliente();
+
+       c1.codigo = 1;
+       c1.nome = "Jose";
+       c1.endereco = "Rua X, 97";
+       c1.saldo = 100;
+
+       c2.codigo = 2;
+       c2.nome = "Maria";
+       c2.endereco = "Rua Y, 98";
+       c2.saldo = 300;
+
+       c3.codigo = 3;
+       c3.nome = "Pedro";
+       c3.endereco = "Rua Z, 99";
+       c3.saldo = 400;
+
+       //Adicionando vários itens de uma vez na Lista
+       listaCliente = Arrays.asList(c1,c2,c3); 
+       // com o asList, podemos inserir quantos objetos quisermos daquele tipo
+            //asList(T...a) sendo o T o tipo da Classe que corresponde a Lista criada
+
+        //Adicionando item a item na Lista
+            //listaCliente.add(new Cliente());
+
+        
+
+    }
+
+
 
     // o GetMapping mapeia uma requisição HTTP ao servidor e retorna ao cliente (navegador)
 
@@ -15,9 +70,9 @@ public class ClienteController {
     // PostMapping --> Métodos de Requisição HTTP
     // DeleteMapping --> Métodos de Requisição HTTP
 
-    @GetMapping("/cliente")
-    public String getClientes(){
-    return "Vai, algum dia, retornar do banco de dados todos os clientes!";
+    @GetMapping("/clientes")
+    public List<Cliente> getClientes(){
+        return listaCliente;
     }
 
     
@@ -30,11 +85,29 @@ public class ClienteController {
         //@PathVariable --> 
 
     @GetMapping("/cliente/{codigo}")
-    public String getCliente(@PathVariable int codigo){
-        if(codigo>0)
-            return "Vai algum dia retornar um cliente: "+ codigo;
-        else
-            return "Erro, codigo negativo: " + codigo;
+    public Cliente getCliente(@PathVariable final int codigo){
+        int position = getPosition(codigo);
+        
+        if(codigo>0 && position > -1){
+            return listaCliente.get(position);
+        }
+        
+        return null;
+            
     }
+
+    public int getPosition(int codigo){
+        int i;
+
+        for(i = 0; i < listaCliente.size();i++){
+
+            if(this.listaCliente.get(i).codigo == codigo){
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     
 }
