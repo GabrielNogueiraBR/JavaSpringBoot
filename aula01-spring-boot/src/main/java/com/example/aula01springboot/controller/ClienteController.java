@@ -38,21 +38,21 @@ public class ClienteController {
         final Cliente c2 = new Cliente();
         final Cliente c3 = new Cliente();
 
-        c1.codigo = 1;
-        c1.nome = "Jose";
-        c1.endereco = "Rua X, 97";
-        c1.saldo = 100;
+        c1.setCodigo(1);
+        c1.setNome("Jose");
+        c1.setEndereco("Rua X, 97");
+        c1.setSaldo(100);
+     
+        c2.setCodigo(2);
+        c2.setNome("Maria");
+        c2.setEndereco("Rua Y, 98");
+        c2.setSaldo(300);
 
-        c2.codigo = 2;
-        c2.nome = "Maria";
-        c2.endereco = "Rua Y, 98";
-        c2.saldo = 300;
-
-        c3.codigo = 3;
-        c3.nome = "Pedro";
-        c3.endereco = "Rua Z, 99";
-        c3.saldo = 400;
-
+        c3.setCodigo(3);
+        c3.setNome("Pedro");
+        c3.setEndereco("Rua Z, 99");
+        c3.setSaldo(400);
+    
         // Adicionando vários itens de uma vez na Lista
         listaCliente = Arrays.asList(c1, c2, c3);
         // com o asList, podemos inserir quantos objetos quisermos daquele tipo
@@ -108,7 +108,7 @@ public class ClienteController {
 
         for (i = 0; i < listaCliente.size(); i++) {
 
-            if (this.listaCliente.get(i).codigo == codigo) {
+            if (this.listaCliente.get(i).getCodigo() == codigo) {
                 return i;
             }
         }
@@ -120,7 +120,7 @@ public class ClienteController {
     public Cliente getClienteCodigo(final int codigo) {
         for (final Cliente aux : listaCliente) {
 
-            if(aux.codigo == codigo)
+            if(aux.getCodigo() == codigo)
                 return aux;
 
         }
