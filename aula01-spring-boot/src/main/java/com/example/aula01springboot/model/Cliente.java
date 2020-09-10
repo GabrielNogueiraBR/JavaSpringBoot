@@ -1,4 +1,4 @@
-package com.example.aula01springboot.controller;
+package com.example.aula01springboot.model;
 
 public class Cliente {
     public int codigo;
