@@ -1,67 +1,25 @@
 package com.example.aula01springboot.controller;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import javax.annotation.PostConstruct;
 
 //Importacao do pacote que possui a classe cliente
 import com.example.aula01springboot.model.Cliente;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.aula01springboot.repository.*;
 
 @RestController
 public class ClienteController {
         // a classe ClienteController é instânciada pelo próprio SpringBoot
-
-    //Criando uma lista para armazenar nossos objetos a serem passados para o método GetMapping
-        //Essa lista é um ATRIBUTO da classe ClienteController, ele seria variavel caso estivesse dentro de um método.
-
-    List <Cliente> listaCliente;
-        // listaCliente = new ArrayList<Cliente>(); --> cria a Lista
     
-    //Todos os métodos enxergam o atributo, diferente de uma variavel
-        //Atributo -> Dentro da classe
-        //Variavel -> Dentro de um método
-
-
-    //PostConstruct é uma anotação do Java que chama o método que possui a anotação assim que a classe é construída.
-
-    @PostConstruct
-    public void criarClientes(){
-        //Metodo para criar Clientes
-        final Cliente c1 = new Cliente();
-        final Cliente c2 = new Cliente();
-        final Cliente c3 = new Cliente();
-
-        c1.setCodigo(1);
-        c1.setNome("Jose");
-        c1.setEndereco("Rua X, 97");
-        c1.setSaldo(100);
-     
-        c2.setCodigo(2);
-        c2.setNome("Maria");
-        c2.setEndereco("Rua Y, 98");
-        c2.setSaldo(300);
-
-        c3.setCodigo(3);
-        c3.setNome("Pedro");
-        c3.setEndereco("Rua Z, 99");
-        c3.setSaldo(400);
-    
-        // Adicionando vários itens de uma vez na Lista
-        listaCliente = Arrays.asList(c1, c2, c3);
-        // com o asList, podemos inserir quantos objetos quisermos daquele tipo
-        // asList(T...a) sendo o T o tipo da Classe que corresponde a Lista criada
-
-        // Adicionando item a item na Lista
-        // listaCliente.add(new Cliente());
-
-    }
+    @Autowired
+    private ClienteRepository repository;
 
     // o GetMapping mapeia uma requisição HTTP ao servidor e retorna ao cliente
     // (navegador)
@@ -72,7 +30,7 @@ public class ClienteController {
 
     @GetMapping("/clientes")
     public List<Cliente> getClientes() {
-        return listaCliente;
+        return repository.getAllClientes();
     }
 
     // GetMapping usando um mapeamento com uma variavel na requisicao
@@ -85,46 +43,16 @@ public class ClienteController {
 
     // @PathVariable -->
 
-    @GetMapping("/cliente/{codigo}")
+    @GetMapping("/clientes/{codigo}")
     public Cliente getCliente(@PathVariable final int codigo) {
-        Cliente cli;
-
-        // Primeiro modo sem as orientações do professor
-        final int position = getPosition(codigo);
-        if (codigo > 0 && position > -1) {
-            cli = listaCliente.get(position);
-        } else
-            cli = null;
-
-        // Segundo Modo de retornar com as orientações do professor
-        cli = getClienteCodigo(codigo);
-
-        return cli;
-
+        return repository.getClienteByCodigo(codigo);
     }
 
-    public int getPosition(final int codigo) {
-        int i;
 
-        for (i = 0; i < listaCliente.size(); i++) {
 
-            if (this.listaCliente.get(i).getCodigo() == codigo) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    // Metodo criado a partir da explicacao do professor
-    public Cliente getClienteCodigo(final int codigo) {
-        for (final Cliente aux : listaCliente) {
-
-            if(aux.getCodigo() == codigo)
-                return aux;
-
-        }
-        return null;
-
+    //PostMapping é usado para enviar informacoes atraves do body da mensagem para o servidor
+    @PostMapping("/clientes")
+    public Cliente salvar(@RequestBody Cliente cliente){
+        return repository.saveCliente(cliente);
     }
 }
