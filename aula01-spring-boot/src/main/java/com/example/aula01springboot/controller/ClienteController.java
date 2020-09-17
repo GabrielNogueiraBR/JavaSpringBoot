@@ -1,11 +1,13 @@
 package com.example.aula01springboot.controller;
 
+import java.net.URI;
 import java.util.List;
 
 //Importacao do pacote que possui a classe cliente
 import com.example.aula01springboot.model.Cliente;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,8 +46,15 @@ public class ClienteController {
     // @PathVariable -->
 
     @GetMapping("/clientes/{codigo}")
-    public Cliente getCliente(@PathVariable final int codigo) {
-        return repository.getClienteByCodigo(codigo);
+    public ResponseEntity<Cliente> getCliente(@PathVariable final int codigo) {
+        //ResponseEntity<Cliente> pois no corpo da resposta e passado informacoes de cliente
+        Cliente cliente = repository.getClienteByCodigo(codigo);
+        if( cliente != null){
+            return ResponseEntity.ok(cliente);
+        }
+        else
+            return ResponseEntity.notFound().build();
+        
     }
 
 
