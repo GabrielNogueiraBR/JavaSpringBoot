@@ -61,7 +61,14 @@ public class ClienteController {
 
     //PostMapping é usado para enviar informacoes atraves do body da mensagem para o servidor
     @PostMapping("/clientes")
-    public Cliente salvar(@RequestBody Cliente cliente){
-        return repository.saveCliente(cliente);
+    public ResponseEntity<Void> salvar(@RequestBody Cliente cliente){
+        //ResponseEntity<Void> pois no corpo da resposta nenhuma informacao e mostrada, por isso utilizamos o void dentro do response entity.
+        
+        cliente = repository.saveCliente(cliente);
+
+        URI uri;
+        uri = URI.create("http://localhost:8080/clientes/" + cliente.getCodigo());       
+        return ResponseEntity.created(uri).build();
+
     }
 }
