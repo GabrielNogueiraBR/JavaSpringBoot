@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -88,4 +89,25 @@ public class ClienteController {
         }
 
     }
+
+    //PutMapping é utilizado para atualizar informaçoes da nossa base de dados
+    @PutMapping("/clientes/{codigo}")
+    public ResponseEntity<Cliente> autalizar(@PathVariable int codigo, @RequestBody Cliente cliente)
+    {
+        //@PathVariable pega o {codigo} e passa para a requisição como codigo
+
+        //@RequestBody pega um Cliente do corpo da requisição para ser enviado para atualizar as informações
+
+        if(repository.getClienteByCodigo(codigo) != null)
+        {
+            cliente.setCodigo(codigo);
+            cliente = repository.update(cliente);
+            return ResponseEntity.ok(cliente);
+
+        }
+        else
+            return ResponseEntity.notFound().build();
+            
+    }
+
 }

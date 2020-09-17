@@ -77,4 +77,18 @@ public class ClienteRepository {
 
 	}
 
+
+	public Cliente update(Cliente cliente) {
+        
+        Cliente aux = getClienteByCodigo(cliente.getCodigo());
+
+        if(aux != null){
+            aux.setEndereco(cliente.getEndereco());
+            aux.setNome(cliente.getNome());
+            aux.setSaldo(cliente.getSaldo());
+        }
+        
+        return aux;
+	}
+
 }
