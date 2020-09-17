@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ClienteRepository {
     private List <Cliente> listaCliente;
-     
+    private int nextId = 0;
     //PostConstruct é uma anotação do Java que chama o método que possui a anotação assim que a classe é construída.
     @PostConstruct
     public void criarClientes(){
@@ -41,6 +41,8 @@ public class ClienteRepository {
         listaCliente.add(c1);
         listaCliente.add(c2);
         listaCliente.add(c3);
+
+        nextId = 4;
     }
 
 
@@ -62,7 +64,7 @@ public class ClienteRepository {
 
     public Cliente saveCliente(Cliente cliente){
 
-        cliente.setCodigo(listaCliente.size()+1);
+        cliente.setCodigo(nextId++);
         listaCliente.add(cliente);
         return cliente;
 
