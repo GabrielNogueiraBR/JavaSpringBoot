@@ -8,6 +8,7 @@ import com.example.aula01springboot.model.Cliente;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -69,6 +70,22 @@ public class ClienteController {
         URI uri;
         uri = URI.create("http://localhost:8080/clientes/" + cliente.getCodigo());       
         return ResponseEntity.created(uri).build();
+
+    }
+
+
+    //DeleteMapping é usado para remover clientes do nosso repositório (BD)
+    @DeleteMapping("/clientes/{codigo}")
+    public ResponseEntity<Void> remove(@PathVariable final int codigo){
+        Cliente cliente = repository.getClienteByCodigo(codigo);
+
+        if( cliente != null){
+            repository.remover(cliente);     
+            return ResponseEntity.noContent().build(); // código 204 para remoção bem sucedida
+        }
+        else{
+            return ResponseEntity.notFound().build(); // código 404 quando o cliente não é encontrado
+        }
 
     }
 }

@@ -68,4 +68,11 @@ public class ClienteRepository {
 
     }
 
+
+	public void remover(Cliente cliente) {
+
+        listaCliente.remove(cliente); //remoção do cliente passado por parâmetro
+
+	}
+
 }
