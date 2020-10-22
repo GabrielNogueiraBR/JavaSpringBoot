@@ -1,10 +1,10 @@
 # Sites para pesquisar após a aula
 
-https://cafe.algaworks.com/esr-lista-de-espera/
-https://cafe.algaworks.com/sri-aula3-gwk/?utm_campaign=popup&utm_source=site-aw&utm_medium=org
-https://www.udemy.com/course/spring-boot-ionic/
-https://blog.algaworks.com/chega-de-nullpointerexception/
-https://www.devmedia.com.br/programacao-funcional-codigo-limpo-e-padroes-de-projeto/32902
+- https://cafe.algaworks.com/esr-lista-de-espera/
+- https://cafe.algaworks.com/sri-aula3-gwk/?utm_campaign=popup&utm_source=site-aw&utm_medium=org
+- https://www.udemy.com/course/spring-boot-ionic/
+- https://blog.algaworks.com/chega-de-nullpointerexception/
+- https://www.devmedia.com.br/programacao-funcional-codigo-limpo-e-padroes-de-projeto/32902
 
 ---
 
