@@ -26,3 +26,23 @@
 
 
 
+## Adicionando uma nova dependência ao projeto
+
+### Primeira forma
+    
+    * ctrl + shift + p
+    * ´Maven: Add a dependency...´
+    * Informar o nome da dependência que está buscando, exemplo: ´spring-boot-starter-validation´
+
+### Segunda forma
+A segunda forma de inserir uma dependência ao projeto é alterando o pom.xml
+    
+    * Encontrar o arquivo ´pom.xml´
+    * Adicionar na divisão de dependências o seguinte código/informação
+
+        <dependency> 
+			<groupId>org.springframework.boot</groupId> 
+			<artifactId>spring-boot-starter-validation</artifactId> 
+	    </dependency>
+
+        
